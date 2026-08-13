@@ -356,14 +356,25 @@ Future<Anime?> mapMedia(List<String> animeId, RxString searchedTitle) async {
   englishTitle = normalize(englishTitle);
 
   // Get the active source based on media type
-  final activeSource = isManga
+  var activeSource = isManga
       ? sourceController.activeMangaSource.value
       : sourceController.activeSource.value;
+
+  if (activeSource == null) {
+    activeSource = isManga
+        ? sourceController.installedMangaExtensions.firstOrNull
+        : sourceController.installedExtensions.firstOrNull;
+    if (activeSource != null) {
+      sourceController.setActiveSource(activeSource);
+    }
+  }
 
   if (activeSource == null) {
     log("No active source found!");
     return null;
   }
+
+  final matchedSource = activeSource;
 
   double highestSimilarity = 0;
   String? bestMatch;
@@ -371,7 +382,7 @@ Future<Anime?> mapMedia(List<String> animeId, RxString searchedTitle) async {
   dynamic bestMatchResult;
 
   Future<void> searchAndCompare(String query) async {
-    final results = (await activeSource.methods.search(query, 1, [])).list;
+    final results = (await matchedSource.methods.search(query, 1, [])).list;
 
     if (results.isEmpty) return;
 

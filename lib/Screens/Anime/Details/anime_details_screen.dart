@@ -64,10 +64,16 @@ class _DetailsScreenState extends State<AnimeDetailsScreen>
   final Rx<bool> _extenstionError = false.obs;
   final Rx<String> syncId = ''.obs;
   final RxInt _currentIndex = 0.obs;
+  Worker? _sourceWorker;
 
   @override
   void initState() {
     super.initState();
+    _sourceWorker = ever<Source?>(sourceController.activeSource, (_) {
+      if (_extenstionError.value) {
+        loadDetails();
+      }
+    });
     _tabBarController = TabController(length: 2, vsync: this);
     _pageController = PageController();
     _tabBarController.addListener(() {
@@ -86,6 +92,7 @@ class _DetailsScreenState extends State<AnimeDetailsScreen>
 
   @override
   void dispose() {
+    _sourceWorker?.dispose();
     _tabBarController.dispose();
     _pageController.dispose();
     super.dispose();
