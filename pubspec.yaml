@@ -30,8 +30,8 @@ dependencies:
   # dart_eval: ^0.7.10
   dartotsu_extension_bridge:
     git:
-     url: https://github.com/RyanYuuki/DartotsuExtensionBridge.git
-     ref: master
+     url: https://github.com/Nahiro18/DartotsuExtensionBridge.git
+     ref: v2.6.4-beta
   # isar_flutter_libs:
   #   git:
   #     url: https://github.com/MrLittleWhite/isar_flutter_libs.git
