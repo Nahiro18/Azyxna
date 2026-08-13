@@ -107,9 +107,9 @@ class _WatchSectionState extends State<ReadSection> {
             if (value != null) {
               final matched = sourceController.installedMangaExtensions
                   .firstWhere((i) => "${i.name}_${i.extensionType}" == value);
-              widget.onSourceChanged();
               sourceController.activeMangaSource.value = matched;
               sourceController.setActiveSource(matched);
+              widget.onSourceChanged();
               setState(() {});
             }
           },

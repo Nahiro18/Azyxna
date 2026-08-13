@@ -119,9 +119,9 @@ class _WatchSectionState extends State<WatchSection> {
                     final matched = sourceController.installedExtensions
                         .firstWhere(
                             (i) => "${i.name}_${i.extensionType}" == value);
-                    widget.onSourceChanged(value);
                     sourceController.activeSource.value = matched;
                     sourceController.setActiveSource(matched);
+                    widget.onSourceChanged(value);
                     log('current: ${sourceController.activeSource.value?.name}');
                   }
                 },

@@ -1,0 +1,52 @@
+name: Build Linux
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [v2.6.4-fixed]
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: 3.44.9
+          cache: true
+
+      - name: Install Linux build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            clang cmake ninja-build pkg-config \
+            libgtk-3-dev libmpv-dev libsecret-1-dev \
+            libjsoncpp-dev liblzma-dev libkeybinder-3.0-dev
+
+      - name: Enable Linux desktop
+        run: flutter config --enable-linux-desktop
+
+      - name: Get packages
+        run: flutter pub get
+
+      - name: Analyze
+        run: flutter analyze --no-fatal-infos
+
+      - name: Build Linux release
+        run: flutter build linux --release
+
+      - name: Prepare artifact
+        run: |
+          cd build/linux/x64/release/bundle
+          mv azyx "Azyx-linux-v2.6.4-fixed"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Azyx-linux-x64
+          path: build/linux/x64/release/bundle/
+          retention-days: 30
