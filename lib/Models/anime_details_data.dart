@@ -8,6 +8,7 @@ class AnilistMediaData {
   int? id;
   int? episodes;
   String? title;
+  String? romajiTitle;
   String? description;
   String? image;
   String? coverImage;
@@ -25,6 +26,7 @@ class AnilistMediaData {
   AnilistMediaData(
       {this.id,
       this.title,
+      this.romajiTitle,
       this.episodes,
       this.description,
       this.image,
@@ -92,6 +94,7 @@ class AnilistMediaData {
     return AnilistMediaData(
         id: json['id'] ?? 1,
         title: json['title']['english'] ?? json['title']['romaji'] ?? "Unknown",
+        romajiTitle: json['title']['romaji'] ?? json['title']['english'] ?? "Unknown",
         description: json['description'],
         image: json['coverImage']['large'],
         episodes: isManga ? json['chapters'] : json['episodes'],
@@ -127,7 +130,7 @@ class AnilistMediaData {
       'id': id,
       'title': {
         'english': title,
-        'romaji': title,
+        'romaji': romajiTitle ?? title,
       },
       'description': description,
       'coverImage': {

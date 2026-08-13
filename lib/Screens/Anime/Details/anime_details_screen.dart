@@ -197,7 +197,7 @@ class _DetailsScreenState extends State<AnimeDetailsScreen>
   }
 
   List<String> formatTitles(AnilistMediaData media) {
-    return ['${media.title}*ANIME', media.title!];
+    return ['${media.title}*ANIME', media.romajiTitle ?? media.title!];
   }
 
   void _onPageChanged(int index) {
