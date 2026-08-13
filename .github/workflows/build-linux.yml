@@ -40,6 +40,9 @@ jobs:
       - name: Build Linux release
         run: flutter build linux --release
 
+      - name: Bundle .env asset
+        run: cp .env build/linux/x64/release/bundle/data/flutter_assets/.env
+
       - name: Prepare artifact
         run: |
           cd build/linux/x64/release/bundle
