@@ -43,14 +43,16 @@ jobs:
       - name: Bundle .env asset
         run: cp .env build/linux/x64/release/bundle/data/flutter_assets/.env
 
-      - name: Prepare artifact
+      - name: Package bundle
         run: |
           cd build/linux/x64/release/bundle
-          mv azyx "Azyx-linux-v2.6.4-fixed"
+          mv azyx Azyx-linux-v2.6.4-fixed
+          cd ..
+          zip -r "$GITHUB_WORKSPACE/Azyx-Linux-x64.zip" bundle/
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Azyx-linux-x64
-          path: build/linux/x64/release/bundle/
+          name: Azyx-Linux-x64.zip
+          path: Azyx-Linux-x64.zip
           retention-days: 30
