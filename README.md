@@ -63,6 +63,52 @@ Getting started with Azyx is super simple:
 
 > **Note**: Ensure that you have Flutter installed. For help, check the [Flutter Docs](https://docs.flutter.dev/get-started).
 
+## 🐧 Linux Desktop Compatibility
+
+### Supported distributions
+
+The Linux build is a **x86_64 (glibc)** binary and runs on any desktop distribution with **`xdg-utils`** installed:
+
+- **Ubuntu** / **Linux Mint** (Cinnamon, XFCE, MATE, GNOME) ✅
+- **Debian** ✅
+- **Fedora** / **RHEL**-based ✅
+- **Arch Linux** / **Manjaro** ✅
+- **openSUSE** ✅
+- Any other glibc-based x86_64 distro with a desktop environment ✅
+
+> **Not supported:** musl-based distros (e.g. Alpine Linux) and ARM/ARM64 builds (not provided).
+
+### Required system dependencies
+
+Install the equivalent packages for your distribution:
+
+**Debian / Ubuntu / Linux Mint:**
+```bash
+sudo apt install libmpv-dev libsecret-1-0 libwebkit2gtk-4.1-0
+```
+
+**Fedora / RHEL-based:**
+```bash
+sudo dnf install mpv-libs libsecret webkit2gtk4.1
+```
+
+**Arch Linux / Manjaro:**
+```bash
+sudo pacman -S libmpv libsecret webkit2gtk-4.1 xdg-utils
+```
+
+**openSUSE:**
+```bash
+sudo zypper install libmpv1 libsecret-1-0 webkit2gtk4.1
+```
+
+### Notes
+- `xdg-utils` is preinstalled on most desktop environments (GNOME, KDE, XFCE, Cinnamon, MATE).
+- The **AniList login** opens your default browser and the app **auto-registers** the `azyx://` scheme handler on first login — no manual setup needed on any supported distribution.
+- The **VOE / YourUpload fix** works out of the box thanks to the public extension repository: `https://raw.githubusercontent.com/Nahiro18/mangayomi-extensions/main/anime_index.json`
+
+---
+
 <!-- <div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
 <!--   <img src="https://github.com/user-attachments/assets/3d4a99da-b53b-43f7-aeb1-f1df3dae378e" alt="Screenshot 2" style="width: 49%; margin-bottom: 10px;" /> -->
 <!--   <img src="https://github.com/user-attachments/assets/52a3b2be-292f-4cf0-b5a8-4f5c7ab427b7" alt="Screenshot 3" style="width: 49%; margin-bottom: 10px;" /> -->
