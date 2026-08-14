@@ -41,28 +41,6 @@ Welcome to Azyx – a modern, feature-rich platform designed for seamless conten
 - Enjoy **sleek animations**, **smooth transitions**, and **engaging visuals**.
 - Elevate your viewing and reading experience with visuals that are **alive** and **responsive**.
 
-## 📥 Getting Started
-
-Getting started with Azyx is super simple:
-
-1. **Clone the Repo**:  
-    ```bash
-    git clone https://github.com/Nahiro18/Azyxna.git
-    cd Azyx
-    ```
-
-2. **Install Dependencies**:  
-    ```bash
-    flutter pub get
-    ```
-
-3. **Run the App**:  
-    ```bash
-    flutter run
-    ```
-
-> **Note**: Ensure that you have Flutter installed. For help, check the [Flutter Docs](https://docs.flutter.dev/get-started).
-
 ## 🐧 Linux Desktop Compatibility / Compatibilidad de escritorio Linux
 
 ### Supported distributions / Distribuciones compatibles
@@ -122,27 +100,6 @@ sudo zypper install libmpv1 libsecret-1-0 webkit2gtk4.1
 - 🌐 **All-in-One**: Enjoy both **anime** and **manga** in a single app.
 - ✨ **Highly Customizable**: Create an experience that’s **uniquely yours**.
 - ⚡ **Modern Design**: Built with the latest tools and technologies for a **smooth and intuitive** experience.
-
-## 🤝 Contributing
-
-Contributions are more than welcome! If you have ideas for new features or spot any issues, here’s how you can get involved:
-
-1. Fork the project.
-2. Create your feature branch:
-    ```bash
-    git checkout -b feature/AmazingFeature
-    ```
-3. Commit your changes:
-    ```bash
-    git commit -m 'Add some AmazingFeature'
-    ```
-4. Push to the branch:
-    ```bash
-    git push origin feature/AmazingFeature
-    ```
-5. Open a pull request.
-
-Check out our [contribution guidelines](CONTRIBUTING.md) for more details.
 
 ## 🔗 Useful Links
 
