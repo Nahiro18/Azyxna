@@ -81,6 +81,12 @@ class AnilistService extends GetxController
         // The webview backend crashes on Linux (GLX conflict with media_kit),
         // so open the system browser (e.g. Firefox). The "azyx" URL scheme is
         // registered on the system to route the callback back to this app.
+        // Remove any stale callback file from a previous attempt so this
+        // login only accepts the code for the browser session we just opened.
+        final cbFile = File(_linuxCallbackPath);
+        if (await cbFile.exists()) {
+          await cbFile.delete();
+        }
         await launchUrl(Uri.parse(url));
         result = await _waitForLinuxCallback();
       } else {
@@ -99,8 +105,10 @@ class AnilistService extends GetxController
     }
   }
 
+  static const String _linuxCallbackPath = '/tmp/azyx_callback_url';
+
   Future<String> _waitForLinuxCallback() async {
-    final file = File('/tmp/azyx_callback_url');
+    final file = File(_linuxCallbackPath);
     final deadline = DateTime.now().add(const Duration(minutes: 5));
     while (DateTime.now().isBefore(deadline)) {
       if (await file.exists()) {
