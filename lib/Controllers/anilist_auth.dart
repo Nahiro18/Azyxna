@@ -87,6 +87,7 @@ class AnilistService extends GetxController
         if (await cbFile.exists()) {
           await cbFile.delete();
         }
+        await _registerLinuxSchemeHandler();
         await launchUrl(Uri.parse(url));
         result = await _waitForLinuxCallback();
       } else {
@@ -121,6 +122,51 @@ class AnilistService extends GetxController
       await Future.delayed(const Duration(milliseconds: 500));
     }
     throw TimeoutException('Login timed out');
+  }
+
+  Future<void> _registerLinuxSchemeHandler() async {
+    final home = Platform.environment['HOME'];
+    if (home == null || home.isEmpty) {
+      return;
+    }
+
+    const handlerName = 'azyx-callback-handler.desktop';
+    final binDir = Directory('$home/.local/bin');
+    final appsDir = Directory('$home/.local/share/applications');
+    final scriptFile = File('$home/.local/bin/azyx-callback.sh');
+    final desktopFile = File('$home/.local/share/applications/$handlerName');
+
+    try {
+      await binDir.create(recursive: true);
+      await appsDir.create(recursive: true);
+
+      if (!scriptFile.existsSync()) {
+        await scriptFile.writeAsString(
+          '#!/bin/bash\necho "\$1" > /tmp/azyx_callback_url\n',
+        );
+        await Process.run('chmod', ['+x', scriptFile.path]);
+      }
+
+      if (!desktopFile.existsSync()) {
+        await desktopFile.writeAsString(
+          '[Desktop Entry]\n'
+          'Name=Azyx\n'
+          'Exec=$scriptFile.path %u\n'
+          'Type=Application\n'
+          'MimeType=x-scheme-handler/azyx;\n'
+          'NoDisplay=true\n',
+        );
+      }
+
+      await Process.run('update-desktop-database', [appsDir.path]);
+      await Process.run('xdg-mime', [
+        'default',
+        handlerName,
+        'x-scheme-handler/azyx',
+      ]);
+    } catch (e) {
+      log('Failed to register azyx scheme handler: $e');
+    }
   }
 
   Future<void> _exchangeCodeForToken(String code, String clientId,
