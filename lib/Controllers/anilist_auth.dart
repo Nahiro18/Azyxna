@@ -2,6 +2,8 @@
 
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io' show Platform;
+import 'dart:math' as math;
 import 'package:azyx/Controllers/anilist_data_controller.dart';
 import 'package:azyx/Controllers/services/models/base_service.dart';
 import 'package:azyx/Controllers/services/models/online_service.dart';
@@ -69,13 +71,24 @@ class AnilistService extends GetxController
     String clientSecret = dotenv.get('CLIENT_SECRET');
     String redirectUri = dotenv.get('REDIRECT_URL');
 
+    // On Linux the webview backend crashes due to a GLX conflict with
+    // media_kit, so fall back to the internal server which opens the system
+    // browser (e.g. Firefox) and captures the callback on http://localhost.
+    if (Platform.isLinux) {
+      final port = 10000 + math.Random().nextInt(50000);
+      redirectUri = 'http://localhost:$port/callback';
+    }
+
     final url =
         'https://anilist.co/api/v2/oauth/authorize?client_id=$clientId&redirect_uri=$redirectUri&response_type=code';
 
     try {
       final result = await FlutterWebAuth2.authenticate(
         url: url,
-        callbackUrlScheme: 'azyx',
+        callbackUrlScheme: redirectUri,
+        options: Platform.isLinux
+            ? const FlutterWebAuth2Options(useWebview: false)
+            : const FlutterWebAuth2Options(),
       );
 
       final code = Uri.parse(result).queryParameters['code'];
