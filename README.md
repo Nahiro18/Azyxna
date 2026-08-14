@@ -1,13 +1,13 @@
 <div align="center">
     <img src='assets/images/icon.jpg' alt='AzyX Icon' style="border-radius: 50px; height: 300px; width: 300px;"/>
     <h1 style="font-size:2rem; font-weight:bold;">AzyX</h1>
-  <a href="https://github.com/reyyuuki/Azyx/releases"/>
-    <img src="https://img.shields.io/github/downloads/reyyuuki/azyx/total.svg?color=white&labelColor=purple&style=for-the-badge" alt="Total Downloads"/></a>
+  <a href="https://github.com/Nahiro18/Azyxna/releases"/>
+    <img src="https://img.shields.io/github/downloads/Nahiro18/Azyxna/total.svg?color=white&labelColor=purple&style=for-the-badge" alt="Total Downloads"/></a>
     
-  <a href="https://github.com/reyyuuki/Azyx/releases/latest">
-    <img src="https://img.shields.io/github/v/release/reyyuuki/Azyx?color=white&labelColor=purple&style=for-the-badge" alt="Latest Release"/></a>
-  <a href="https://github.com/reyyuuki/Azyx/stargazers">
-    <img src="https://img.shields.io/github/stars/reyyuuki/Azyx?color=white&labelColor=purple&style=for-the-badge" alt="GitHub Stars"/>
+  <a href="https://github.com/Nahiro18/Azyxna/releases/latest">
+    <img src="https://img.shields.io/github/v/release/Nahiro18/Azyxna?color=white&labelColor=purple&style=for-the-badge" alt="Latest Release"/></a>
+  <a href="https://github.com/Nahiro18/Azyxna/stargazers">
+    <img src="https://img.shields.io/github/stars/Nahiro18/Azyxna?color=white&labelColor=purple&style=for-the-badge" alt="GitHub Stars"/>
   </a>
 </div>
 <div align="center">
@@ -47,7 +47,7 @@ Getting started with Azyx is super simple:
 
 1. **Clone the Repo**:  
     ```bash
-    git clone https://github.com/reyyuuki/Azyx.git
+    git clone https://github.com/Nahiro18/Azyxna.git
     cd Azyx
     ```
 
@@ -146,9 +146,9 @@ Check out our [contribution guidelines](CONTRIBUTING.md) for more details.
 
 ## 🔗 Useful Links
 
-- 📥 **Downloads**: [GitHub Releases](https://github.com/reyyuuki/Azyx/releases)
+- 📥 **Downloads**: [GitHub Releases](https://github.com/Nahiro18/Azyxna/releases)
 - 📸 **Screenshots**: [Screenshots Gallery](https://path-to-screenshots)
-- 🛠️ **Source Code**: [Azyx Repository](https://github.com/reyyuuki/Azyx)
+- 🛠️ **Source Code**: [Azyx Repository](https://github.com/Nahiro18/Azyxna)
 
 ## 📜 License
 
