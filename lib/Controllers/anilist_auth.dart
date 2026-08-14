@@ -1,9 +1,9 @@
 // ignore_for_file: invalid_use_of_protected_member
 
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:io' show Platform;
-import 'dart:math' as math;
+import 'dart:io';
 import 'package:azyx/Controllers/anilist_data_controller.dart';
 import 'package:azyx/Controllers/services/models/base_service.dart';
 import 'package:azyx/Controllers/services/models/online_service.dart';
@@ -24,6 +24,7 @@ import 'package:flutter_web_auth_2/flutter_web_auth_2.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 final AnilistService anilistAuthController = Get.find();
 
@@ -71,25 +72,23 @@ class AnilistService extends GetxController
     String clientSecret = dotenv.get('CLIENT_SECRET');
     String redirectUri = dotenv.get('REDIRECT_URL');
 
-    // On Linux the webview backend crashes due to a GLX conflict with
-    // media_kit, so fall back to the internal server which opens the system
-    // browser (e.g. Firefox) and captures the callback on http://localhost.
-    if (Platform.isLinux) {
-      final port = 10000 + math.Random().nextInt(50000);
-      redirectUri = 'http://localhost:$port/callback';
-    }
-
-    final url =
-        'https://anilist.co/api/v2/oauth/authorize?client_id=$clientId&redirect_uri=$redirectUri&response_type=code';
-
     try {
-      final result = await FlutterWebAuth2.authenticate(
-        url: url,
-        callbackUrlScheme: redirectUri,
-        options: Platform.isLinux
-            ? const FlutterWebAuth2Options(useWebview: false)
-            : const FlutterWebAuth2Options(),
-      );
+      final url =
+          'https://anilist.co/api/v2/oauth/authorize?client_id=$clientId&redirect_uri=$redirectUri&response_type=code';
+
+      final String result;
+      if (Platform.isLinux) {
+        // The webview backend crashes on Linux (GLX conflict with media_kit),
+        // so open the system browser (e.g. Firefox). The "azyx" URL scheme is
+        // registered on the system to route the callback back to this app.
+        await launchUrl(Uri.parse(url));
+        result = await _waitForLinuxCallback();
+      } else {
+        result = await FlutterWebAuth2.authenticate(
+          url: url,
+          callbackUrlScheme: 'azyx',
+        );
+      }
 
       final code = Uri.parse(result).queryParameters['code'];
       if (code != null) {
@@ -98,6 +97,22 @@ class AnilistService extends GetxController
     } catch (e) {
       log('Error during login: $e');
     }
+  }
+
+  Future<String> _waitForLinuxCallback() async {
+    final file = File('/tmp/azyx_callback_url');
+    final deadline = DateTime.now().add(const Duration(minutes: 5));
+    while (DateTime.now().isBefore(deadline)) {
+      if (await file.exists()) {
+        final content = (await file.readAsString()).trim();
+        await file.delete();
+        if (content.isNotEmpty) {
+          return content;
+        }
+      }
+      await Future.delayed(const Duration(milliseconds: 500));
+    }
+    throw TimeoutException('Login timed out');
   }
 
   Future<void> _exchangeCodeForToken(String code, String clientId,
