@@ -151,7 +151,7 @@ class AnilistService extends GetxController
         await desktopFile.writeAsString(
           '[Desktop Entry]\n'
           'Name=Azyx\n'
-          'Exec=$scriptFile.path %u\n'
+          'Exec=${scriptFile.path} %u\n'
           'Type=Application\n'
           'MimeType=x-scheme-handler/azyx;\n'
           'NoDisplay=true\n',
