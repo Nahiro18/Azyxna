@@ -63,31 +63,31 @@ Getting started with Azyx is super simple:
 
 > **Note**: Ensure that you have Flutter installed. For help, check the [Flutter Docs](https://docs.flutter.dev/get-started).
 
-## 🐧 Linux Desktop Compatibility
+## 🐧 Linux Desktop Compatibility / Compatibilidad de escritorio Linux
 
-### Supported distributions
+### Supported distributions / Distribuciones compatibles
 
-The Linux build is a **x86_64 (glibc)** binary and runs on any desktop distribution with **`xdg-utils`** installed:
+The Linux build is a **x86_64 (glibc)** binary and runs on any desktop distribution with **`xdg-utils`** installed / El build de Linux es un binario **x86_64 (glibc)** y funciona en cualquier distribución de escritorio con **`xdg-utils`** instalado:
 
 - **Ubuntu** / **Linux Mint** (Cinnamon, XFCE, MATE, GNOME) ✅
 - **Debian** ✅
-- **Fedora** / **RHEL**-based ✅
+- **Fedora** / **RHEL**-based / basadas en RHEL ✅
 - **Arch Linux** / **Manjaro** ✅
 - **openSUSE** ✅
-- Any other glibc-based x86_64 distro with a desktop environment ✅
+- Any other glibc-based x86_64 distro with a desktop environment / Cualquier otra distro x86_64 basada en glibc con escritorio ✅
 
-> **Not supported:** musl-based distros (e.g. Alpine Linux) and ARM/ARM64 builds (not provided).
+> **Not supported / No soportado:** musl-based distros (e.g. Alpine Linux) and ARM/ARM64 builds (not provided) / distros basadas en musl (p. ej. Alpine Linux) y builds ARM/ARM64 (no se publican).
 
-### Required system dependencies
+### Required system dependencies / Dependencias de sistema requeridas
 
-Install the equivalent packages for your distribution:
+Install the equivalent packages for your distribution / Instala los paquetes equivalentes para tu distribución:
 
 **Debian / Ubuntu / Linux Mint:**
 ```bash
 sudo apt install libmpv-dev libsecret-1-0 libwebkit2gtk-4.1-0
 ```
 
-**Fedora / RHEL-based:**
+**Fedora / RHEL-based / basadas en RHEL:**
 ```bash
 sudo dnf install mpv-libs libsecret webkit2gtk4.1
 ```
@@ -102,10 +102,10 @@ sudo pacman -S libmpv libsecret webkit2gtk-4.1 xdg-utils
 sudo zypper install libmpv1 libsecret-1-0 webkit2gtk4.1
 ```
 
-### Notes
-- `xdg-utils` is preinstalled on most desktop environments (GNOME, KDE, XFCE, Cinnamon, MATE).
-- The **AniList login** opens your default browser and the app **auto-registers** the `azyx://` scheme handler on first login — no manual setup needed on any supported distribution.
-- The **VOE / YourUpload fix** works out of the box thanks to the public extension repository: `https://raw.githubusercontent.com/Nahiro18/mangayomi-extensions/main/anime_index.json`
+### Notes / Notas
+- `xdg-utils` is preinstalled on most desktop environments (GNOME, KDE, XFCE, Cinnamon, MATE) / `xdg-utils` viene preinstalado en la mayoría de los escritorios (GNOME, KDE, XFCE, Cinnamon, MATE).
+- The **AniList login** opens your default browser and the app **auto-registers** the `azyx://` scheme handler on first login — no manual setup needed on any supported distribution / El **login de AniList** abre tu navegador predeterminado y la app **registra automáticamente** el esquema `azyx://` en el primer login — no requiere configuración manual en ninguna distribución compatible.
+- The **VOE / YourUpload fix** works out of the box thanks to the public extension repository / El **fix de VOE / YourUpload** funciona de serie gracias al repositorio público de extensiones: `https://raw.githubusercontent.com/Nahiro18/mangayomi-extensions/main/anime_index.json`
 
 ---
 
