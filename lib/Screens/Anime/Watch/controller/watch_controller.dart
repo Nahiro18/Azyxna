@@ -325,18 +325,25 @@ class WatchController extends GetxController with WidgetsBindingObserver {
     }
   }
 
+  Timer? _dragThrottle;
+  double _dragBrightness = 0.0;
+  double _dragVolume = 0.0;
   void handleVerticalDrag(DragUpdateDetails e, BuildContext context) async {
     if (!isControlsLocked.value) {
       final delta = e.primaryDelta ?? 0.0;
       final Offset position = e.localPosition;
       if (position.dx <= MediaQuery.of(context).size.width / 2) {
-        final brightness = _brightnessValue.value - delta / 500;
-        final result = brightness.clamp(0.0, 1.0);
-        setBrightness(result.toDouble());
+        _dragBrightness = (_dragBrightness - (delta / 500)).clamp(0.0, 1.0);
+        _dragThrottle?.cancel();
+        _dragThrottle = Timer(const Duration(milliseconds: 16), () {
+          setBrightness(_dragBrightness);
+        });
       } else {
-        final volume = _volumeValue.value - delta / 500;
-        final result = volume.clamp(0.0, 1.0);
-        setVolume(result.toDouble());
+        _dragVolume = (_dragVolume - (delta / 500)).clamp(0.0, 1.0);
+        _dragThrottle?.cancel();
+        _dragThrottle = Timer(const Duration(milliseconds: 16), () {
+          setVolume(_dragVolume);
+        });
       }
     }
   }
@@ -1013,7 +1020,11 @@ class WatchController extends GetxController with WidgetsBindingObserver {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
-    player.dispose();
+    player.pause();
+    player.stop();
+    Future.delayed(const Duration(milliseconds: 250), () {
+      player.dispose();
+    });
     localHistoryEntry();
     updateTimer?.cancel();
     doubleTapTimer?.cancel();

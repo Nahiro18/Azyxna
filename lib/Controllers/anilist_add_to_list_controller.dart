@@ -162,6 +162,7 @@ class AnilistAddToListController extends GetxController {
                                 borderRadius: BorderRadius.circular(12),
                                 child: Image.network(
                                   image,
+                                  cacheWidth: 80,
                                   fit: BoxFit.cover,
                                   errorBuilder: (context, error, stackTrace) =>
                                       Container(
@@ -453,6 +454,7 @@ class AnilistAddToListController extends GetxController {
                                 borderRadius: BorderRadius.circular(12),
                                 child: Image.network(
                                   image,
+                                  cacheWidth: 80,
                                   fit: BoxFit.cover,
                                   errorBuilder: (context, error, stackTrace) =>
                                       Container(

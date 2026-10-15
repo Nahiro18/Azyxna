@@ -1,3 +1,9 @@
+final _seasonPatterns = [
+  RegExp(r'\b(\d+)(?:th|st|nd|rd)?\s*season\b', caseSensitive: false),
+  RegExp(r'\bseason\s*(\d+)\b', caseSensitive: false),
+  RegExp(r'\s(\d+)\b(?!\s*[a-zA-Z])'),
+  RegExp(r'\b(\d+)(nd|rd|th|st)\b'),
+];
 import 'dart:developer';
 import 'package:azyx/Controllers/source/source_controller.dart';
 import 'package:azyx/Models/anime_class.dart';
@@ -104,21 +110,14 @@ AnimeMatchResult matchAnimeTitle(
 
   // Extract season numbers from titles using regular expressions
   int? extractSeasonInfo(String title) {
-    final List<RegExp> seasonPatterns = [
-      RegExp(r'\b(\d+)(?:th|st|nd|rd)?\s*season\b', caseSensitive: false),
-      RegExp(r'\bseason\s*(\d+)\b', caseSensitive: false),
-      RegExp(r'\s(\d+)\b(?!\s*[a-zA-Z])'),
-      RegExp(r'\b(\d+)(nd|rd|th|st)\b'),
-    ];
-
-    for (final pattern in seasonPatterns) {
+    for (final pattern in _seasonPatterns) {
       final match = pattern.firstMatch(title);
       if (match != null && match.group(1) != null) {
         return int.tryParse(match.group(1)!);
       }
     }
-
     return null;
+  }    return null;
   }
 
   final int? targetSeasonNumber = extractSeasonInfo(normalizedTarget);
